@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning the Git repository...'
-                git branch: 'main', url: 'git@github.com:SaiKrishnaG19/FilmCastPro.git'
+                git branch: 'main', url: 'https://github.com/SaiKrishnaG19/FilmCastPro-Infra.git'
             }
         }
 
@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('Build React App') {
+        stage('Build App') {
             steps {
                 echo 'Building the React application...'
                 sh 'npm run build'
