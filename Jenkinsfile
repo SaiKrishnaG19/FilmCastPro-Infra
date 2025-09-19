@@ -1,26 +1,65 @@
 pipeline {
     agent any
-    
+
+    tools {
+        nodejs 'NodeJS 24.x's
+    }
+
+    environment {
+        CI = 'true'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                echo 'Cloning the Git repository...'
-                git branch: 'main', url: 'https://github.com/SaiKrishnaG19/FilmCastPro-Infra.git'
+                git branch: 'main', url: 'https://github.com/SaiKrishnaG19/FilmCastPro.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing Node.js dependencies...'
-                sh 'npm install'
+                script {
+                    bat 'npm install'
+                }
             }
         }
 
-        stage('Build App') {
+        stage('Run Tests') {
             steps {
-                echo 'Building the React application...'
-                sh 'npm run build'
+                script {
+                    bat 'npm test'
+                }
             }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    bat 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy script or commands can be added here
+                    bat 'echo Deploying the application...'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
