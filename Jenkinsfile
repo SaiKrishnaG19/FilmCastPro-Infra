@@ -5,10 +5,6 @@ pipeline {
         nodejs 'nodejs'
     }
 
-    environment {
-        CI = 'true'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -19,7 +15,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    bat 'npm install'
+                    sh 'npm install'
                 }
             }
         }
@@ -35,7 +31,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    bat 'npm run build'
+                    sh 'npm run build'
                 }
             }
         }
@@ -44,7 +40,7 @@ pipeline {
             steps {
                 script {
                     // Deploy script or commands can be added here
-                    bat 'echo Deploying the application...'
+                    sh 'echo Deploying the application...'
                 }
             }
         }
